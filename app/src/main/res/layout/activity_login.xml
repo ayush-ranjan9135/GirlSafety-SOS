@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <!-- Progress Bar -->
+
+
+    <!-- Registration Prompt -->
+
+    <!-- Sign Up Button -->
+
+    <!-- Background Image -->
+
+    <ImageView
+        android:layout_width="414dp"
+        android:layout_height="235dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-25dp"
+        android:layout_marginEnd="9dp"
+        android:src="@drawable/top_background" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="208dp"
+        android:layout_height="95dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="17dp"
+        android:text="Hi,\n Please Login"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="42dp"
+        android:background="@drawable/button_background"
+        android:hint="Email" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email"
+        android:layout_alignStart="@+id/email"
+        android:layout_alignEnd="@+id/email"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="-5dp"
+        android:background="@drawable/button_background"
+        android:hint="Password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_alignStart="@+id/password"
+        android:layout_alignEnd="@+id/password"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="-2dp"
+        android:background="@color/green"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_login"
+        android:layout_alignStart="@+id/btn_login"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="26dp"
+        android:gravity="center_horizontal"
+        android:text="Don't have an Account?"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:layout_alignEnd="@+id/btn_login"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginEnd="34dp"
+        android:layout_toEndOf="@+id/textView3"
+        android:gravity="center_horizontal"
+        android:text="Sign-up"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="233dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-128dp"
+        android:layout_marginRight="-128dp"
+        android:layout_marginBottom="-5dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/wave_women" />
+
+
+    <!-- Add ProgressBar here -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

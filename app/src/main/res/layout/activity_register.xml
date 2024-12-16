@@ -1,0 +1,133 @@
+    <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <ImageView
+        android:layout_width="414dp"
+        android:layout_height="247dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-24dp"
+        android:layout_marginEnd="14dp"
+        android:src="@drawable/top_background" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="Hlo,\n Please Register"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="42dp"
+        android:background="@drawable/button_background"
+        android:hint="Email" />
+
+
+    <!-- Add ProgressBar here -->
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="38dp"
+        android:background="@drawable/button_background"
+        android:hint="Password" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/confirm_password"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="39dp"
+        android:background="@drawable/button_background"
+        android:hint="Confirm Password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sign_up"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirm_password"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="37dp"
+        android:background="@color/green"
+        android:text="Sign up"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_already_registered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_sign_up"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="25dp"
+        android:text="Already Registered?"
+        android:textColor="#0E0E0E"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="67dp"
+        android:layout_height="39dp"
+        android:layout_below="@id/tv_already_registered"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="-28dp"
+        android:layout_marginEnd="72dp"
+        android:layout_toEndOf="@+id/tv_already_registered"
+        android:text="Login"
+        android:textColor="#3F51B5"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="233dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-128dp"
+        android:layout_marginRight="-128dp"
+        android:layout_marginBottom="-5dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/wave_women" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+</RelativeLayout>

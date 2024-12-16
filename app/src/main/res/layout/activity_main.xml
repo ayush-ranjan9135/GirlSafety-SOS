@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="565dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-75dp"
+        android:layout_marginEnd="11dp"
+        android:src="@drawable/mainscreen" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_send_message"
+        android:layout_width="142dp"
+        android:layout_height="143dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="404dp"
+        android:background="@drawable/circular_button"
+        android:text="Emergency"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit_numbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="11dp"
+        android:text="Edit Numbers" />
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584951789594",
+    "project_id": "girls-safety-1ca35",
+    "storage_bucket": "girls-safety-1ca35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584951789594:android:ccbf6da1c4715e571b79a3",
+        "android_client_info": {
+          "package_name": "com.example.girlssafety"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWwNg01jPmdc0w4vqldhgZVFzZgyw_O6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

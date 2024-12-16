@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:attr/colorControlHighlight">
+
+    <!-- Shape for the normal state of the button -->
+    <item>
+        <shape android:shape="oval">
+            <!-- Set the red background color here -->
+            <solid android:color="#D30606" />
+        </shape>
+    </item>
+
+    <!-- Optional mask shape for ripple effect (if needed) -->
+    <item android:id="@android:id/mask">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+
+</ripple>
