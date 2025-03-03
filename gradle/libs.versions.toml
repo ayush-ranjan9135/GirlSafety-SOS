@@ -1,5 +1,8 @@
 [versions]
 agp = "8.4.0"
+appcompatVersion = "1.6.1"
+googleFirebaseAuthVersion = "22.2.0"
+googleFirebaseFirestore = "24.10.3"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -13,6 +16,9 @@ firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.1.0"
 
 [libraries]
+appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+firebase-auth-v2220 = { module = "com.google.firebase:firebase-auth", version.ref = "googleFirebaseAuthVersion" }
+firebase-firestore-v24103 = { module = "com.google.firebase:firebase-firestore", version.ref = "googleFirebaseFirestore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

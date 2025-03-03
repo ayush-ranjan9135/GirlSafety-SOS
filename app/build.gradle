@@ -49,6 +49,9 @@ dependencies {
     // Add other Firebase dependencies as needed, e.g.:
      implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-firestore:24.5.0'
+    implementation libs.appcompat.v161 // Ensure you have this dependency
+    implementation libs.firebase.firestore.v24103
+    implementation libs.firebase.auth.v2220
     
 }
 
