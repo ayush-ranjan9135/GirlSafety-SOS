@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
@@ -27,14 +26,13 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <!-- Email Field -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailLayout"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
         android:layout_marginTop="73dp"
-        android:layout_marginEnd="42dp"
-        android:minHeight="48dp">
+        android:layout_marginStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
@@ -44,14 +42,13 @@
             android:hint="Email" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password Field -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/email"
+        android:layout_below="@id/emailLayout"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="38dp"
-        android:minHeight="48dp">
+        android:layout_marginStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -62,14 +59,13 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Confirm Password Field -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordLayout"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
+        android:layout_below="@id/passwordLayout"
         android:layout_marginTop="31dp"
-        android:layout_marginEnd="39dp"
-        android:minHeight="48dp">
+        android:layout_marginStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confirm_password"
@@ -80,28 +76,26 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Sign Up Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_up"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/confirm_password"
+        android:layout_below="@id/confirmPasswordLayout"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginStart="20dp"
         android:background="@color/green"
         android:text="Sign up"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
-        tools:ignore="NotSibling" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_already_registered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_sign_up"
-        android:layout_marginStart="102dp"
         android:layout_marginTop="25dp"
+        android:layout_marginStart="90dp"
         android:text="Already Registered?"
         android:textColor="#0E0E0E"
         android:textSize="18sp"
@@ -111,29 +105,27 @@
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_already_registered"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/btn_sign_up"
         android:layout_toEndOf="@id/tv_already_registered"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:text="Login"
         android:textColor="#3F51B5"
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
-        android:layout_height="233dp"
+        android:layout_height="368dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:scaleType="center"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="-140dp"
         app:srcCompat="@drawable/wave_women" />
 
-    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:visibility="gone" />
 
 </RelativeLayout>
