@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +28,7 @@ public class AddNumbersActivity extends AppCompatActivity {
 
     private ListView contactListView;
     private FloatingActionButton fabAddNumber;
-    private ArrayAdapter<String> adapter;
+    private ContactAdapter adapter;
     private List<String> contactNumbers;
     private FirebaseFirestore db;
 
@@ -41,17 +44,17 @@ public class AddNumbersActivity extends AppCompatActivity {
 
         // Initialize contact numbers list and adapter
         contactNumbers = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contactNumbers);
+        adapter = new ContactAdapter();
         contactListView.setAdapter(adapter);
 
         // Load existing contacts from Firestore
         loadContactsFromFirestore();
 
         // Floating action button click to open dialog
-        fabAddNumber.setOnClickListener(v -> showAddContactDialog());
+        fabAddNumber.setOnClickListener(v -> showAddContactDialog(-1));
     }
 
-    private void showAddContactDialog() {
+    private void showAddContactDialog(int position) {
         // Inflate the dialog layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_add_contact, null);
@@ -59,6 +62,11 @@ public class AddNumbersActivity extends AppCompatActivity {
         EditText edtContactNumber = dialogView.findViewById(R.id.contactNumber);
         Button btnSave = dialogView.findViewById(R.id.save);
         Button btnCancel = dialogView.findViewById(R.id.cancel);
+
+        // If editing, pre-fill the text
+        if (position != -1) {
+            edtContactNumber.setText(contactNumbers.get(position));
+        }
 
         // Build and display the dialog
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -72,8 +80,13 @@ public class AddNumbersActivity extends AppCompatActivity {
             if (contactNumber.isEmpty()) {
                 Toast.makeText(this, "Please enter a contact number", Toast.LENGTH_SHORT).show();
             } else {
-                // Add the contact to the list
-                contactNumbers.add(contactNumber);
+                if (position == -1) {
+                    // Add new contact
+                    contactNumbers.add(contactNumber);
+                } else {
+                    // Update existing contact
+                    contactNumbers.set(position, contactNumber);
+                }
 
                 // Save the updated list to Firestore
                 saveContactsToFirestore();
@@ -90,6 +103,7 @@ public class AddNumbersActivity extends AppCompatActivity {
     }
 
     private void saveContactsToFirestore() {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Create a map to store the list of contacts
@@ -101,7 +115,7 @@ public class AddNumbersActivity extends AppCompatActivity {
                 .document(userId)
                 .set(data)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Contacts saved successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Contacts updated successfully!", Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged(); // Update the ListView
                 })
                 .addOnFailureListener(e -> {
@@ -110,6 +124,7 @@ public class AddNumbersActivity extends AppCompatActivity {
     }
 
     private void loadContactsFromFirestore() {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Fetch the document containing the contact list
@@ -125,12 +140,57 @@ public class AddNumbersActivity extends AppCompatActivity {
                             contactNumbers.addAll(loadedContacts);
                             adapter.notifyDataSetChanged(); // Update the ListView
                         }
-                    } else {
-                        Toast.makeText(this, "No contacts found", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error loading contacts: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private class ContactAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return contactNumbers.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return contactNumbers.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(AddNumbersActivity.this).inflate(R.layout.item_contact, parent, false);
+            }
+
+            TextView tvNumber = convertView.findViewById(R.id.tvContactNumber);
+            ImageButton btnEdit = convertView.findViewById(R.id.btnEdit);
+            ImageButton btnDelete = convertView.findViewById(R.id.btnDelete);
+
+            String number = contactNumbers.get(position);
+            tvNumber.setText(number);
+
+            btnEdit.setOnClickListener(v -> showAddContactDialog(position));
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(AddNumbersActivity.this)
+                        .setTitle("Delete Contact")
+                        .setMessage("Are you sure you want to delete this contact?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            contactNumbers.remove(position);
+                            saveContactsToFirestore();
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            });
+
+            return convertView;
+        }
     }
 }
