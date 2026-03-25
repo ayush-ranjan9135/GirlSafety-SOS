@@ -12,69 +12,113 @@
 ---
 
 ## 📌 Problem Statement
-In critical situations, victims of harassment or danger often face:
-*   **Time Constraints**: No time to dial a number or type a message.
-*   **Panic**: Difficulty in explaining their exact location.
-*   **Connectivity Issues**: Reliance on data for messaging apps (WhatsApp/Telegram) which might be slow.
-*   **Device Loss**: Losing contact lists when moving to a new phone.
+In critical situations, victims of harassment or danger often face several challenges:
+*   **Time Constraints**: There is rarely enough time to dial a phone number or type a manual message.
+*   **Panic & Disorientation**: Under stress, explaining an exact location to responders is difficult.
+*   **Connectivity Gaps**: Relying on data-heavy apps (like WhatsApp) can be risky in low-signal areas.
+*   **Data Portability**: Losing emergency contact info when switching devices.
 
 ## 💡 The Solution
-Our app addresses these gaps by providing:
-*   **One-Tap Activation**: A prominent SOS button for instant use.
-*   **Automated Geolocation**: Sends a direct **Google Maps link** of the user's live location.
-*   **SMS-Based Alerting**: Works even without a stable data connection for the recipient.
-*   **Cloud Synchronization**: Securely stores emergency contacts in **Firebase Firestore**, ensuring data persists across devices.
+Our app simplifies emergency communication into a **one-click action**:
+*   **One-Tap Activation**: A high-visibility SOS button for instant help.
+*   **Automated Geolocation**: Real-time GPS tracking that sends a direct **Google Maps link**.
+*   **SMS-Based Alerting**: Reliable communication that works even without a stable data connection.
+*   **Cloud Persistence**: Securely stores trusted contacts in **Firebase Firestore**, ensuring your safety circle is accessible from any device.
 
 ---
 
 ## 🏗️ Project Architecture
-The application follows a **Modular Layered Architecture** to ensure reliability and scalability:
+The application follows a modular architecture to ensure reliability and clean code:
 
-1.  **Presentation Layer (UI)**: Built with XML and Material Design. Includes activities for Authentication, Contact Management, and the main SOS dashboard.
-2.  **Service Layer (Logic)**:
-    *   **Location Service**: Uses Google's `FusedLocationProviderClient` for battery-efficient, high-accuracy GPS tracking.
-    *   **SMS Gateway**: Utilizes `SmsManager` to dispatch background messages to multiple recipients.
-3.  **Data Layer (Backend)**: 
-    *   **Firebase Auth**: Secure login/registration.
-    *   **Cloud Firestore**: Real-time NoSQL database to manage user-specific emergency contact lists.
+### 📱 Presentation Layer
+*   **Activities**: `MainActivity` (SOS dashboard), `AddNumbersActivity` (Contact manager), `LoginActivity`, and `RegisterActivity`.
+*   **UI/UX**: Clean XML layouts using **Material Design Components** for high visibility.
+
+### ⚙️ Logic Layer
+*   **Location Engine**: Uses Google's `FusedLocationProviderClient` for battery-efficient and high-accuracy GPS coordinates.
+*   **SMS Dispatcher**: Leverages the `SmsManager` API to broadcast background messages to multiple recipients.
+*   **Permission Handler**: Dynamic runtime checks for Location and SMS permissions.
+
+### ☁️ Data Layer
+*   **Authentication**: Managed by **Firebase Auth** (Email/Password).
+*   **Storage**: **Cloud Firestore** stores user-specific emergency contacts in a scalable NoSQL format.
 
 ---
 
 ## 🔄 App Flow
-The workflow is designed to be frictionless:
+The workflow is designed to minimize the time between "danger" and "alert":
 
-1.  **Onboarding**: User creates an account or logs in via Firebase.
-2.  **Configuration**: User adds up to 5 trusted emergency contacts (stored in Firestore).
-3.  **Emergency Trigger**: 
-    *   User presses the **SOS Button** on the `MainActivity`.
-    *   App checks for `SEND_SMS` and `ACCESS_FINE_LOCATION` permissions.
-4.  **Data Processing**: App captures the **Latitude & Longitude** and constructs a Google Maps URL.
-5.  **Alert Dispatch**: The system fetches the contact list from the cloud and sends the SOS SMS to every contact simultaneously.
+1.  **Onboarding**: User creates a secure account.
+2.  **Configuration**: User adds up to 5 trusted contacts in the "Manage Contacts" section.
+3.  **Emergency Trigger**:
+    *   User taps the SOS button.
+    *   App fetches **Latitude & Longitude** via GPS.
+    *   App retrieves the contact list from **Firestore** in real-time.
+4.  **Broadcast**: System generates a Google Maps link and sends a custom SOS SMS to all saved contacts simultaneously.
+5.  **Feedback**: The user receives visual confirmation (Toast) once the alerts are dispatched.
 
 ---
 
 ## ✨ Key Features
-*   🔐 **Secure Cloud Auth**: Personalized accounts so your safety circle is always yours.
-*   📍 **High-Accuracy Tracking**: Real-time GPS integration with Google Play Services.
-*   📇 **Dynamic Contact Manager**: Easily Add, Edit, or Delete contacts with immediate cloud sync.
-*   🚀 **Zero-Delay SOS**: Optimized to send alerts within seconds of the trigger.
-*   🎨 **Material UI**: Modern, clean, and intuitive interface for ease of use under stress.
+*   🚨 **Instant SOS**: Trigger emergency alerts in under 2 seconds.
+*   📍 **Live Tracking**: Inclusion of a live Google Maps link for immediate navigation.
+*   📇 **Smart Contact Management**: Add, Edit, and Delete contacts with cloud synchronization.
+*   🔐 **Secure User Profiles**: Your data is protected by Firebase security rules.
+*   🎨 **Stress-Free UI**: Large buttons and clear icons designed for emergency use.
 
 ---
 
 ## 🛠️ Tech Stack
 | Category | Technology |
 | :--- | :--- |
-| **Language** | Java (JDK 8+) |
+| **Language** | Java (JDK 8) |
 | **Mobile Platform** | Android (Min SDK 26) |
-| **Database** | Firebase Cloud Firestore |
-| **Authentication** | Firebase Auth |
+| **Backend** | Firebase (Auth & Firestore) |
 | **Location API** | Google Fused Location Provider |
-| **UI Design** | XML, Material Design Components |
+| **UI Framework** | Material Design Components |
+
+---
+
+## 📂 Project Structure
+```text
+📁 GirlSafety-SOS
+ ├── 📁 app
+ │    ├── 📁 src/main/java (Source Code)
+ │    │    └── 📁 com.example.girlssafety
+ │    │         ├── MainActivity.java
+ │    │         ├── AddNumbersActivity.java
+ │    │         └── ...
+ │    └── 📁 src/main/res (Resources)
+ │         ├── 📁 layout (UI XMLs)
+ │         └── 📁 drawable (Icons/Images)
+ └── 📄 README.md
+```
 
 ---
 
 ## 🚀 Getting Started
 
-1.  **Clone the Repository**:
-    
+### Prerequisites
+*   Android Studio Ladybug or later.
+*   A Firebase project with `google-services.json` in the `/app` folder.
+*   A physical Android device (recommended for testing SMS and GPS).
+
+### Installation
+1.  **Clone the Repo**:
+    ```bash
+    git clone https://github.com/ayush-ranjan9135/GirlSafety-SOS.git
+    ```
+2.  **Open in Android Studio**: Import the project and let Gradle sync.
+3.  **Run**: Click the "Run" button to install the app.
+
+---
+
+## 👨‍💻 Author
+**Ayush Ranjan**  
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ayush-ranjan9135)
+
+---
+
+<p align="center">
+  ⭐ If you find this project useful, please consider giving it a star on GitHub!
+</p>
