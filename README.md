@@ -1,136 +1,80 @@
-<h1 align="center">🚨 GirlSafety-SOS</h1>
+# 🚨 GirlSafety-SOS — Empowering Women's Safety 🛡️
 
 <p align="center">
-  A robust personal safety application designed to provide 
-  <strong>instant emergency assistance</strong> to women in distress with one tap.
+  <img src="https://img.shields.io/badge/Android-33D47E?style=for-the-badge&logo=android&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" />
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Android-12.0%2B-brightgreen.svg" />
-  <img src="https://img.shields.io/badge/Backend-Firebase-orange.svg" />
-  <img src="https://img.shields.io/badge/Language-Java-blue.svg" />
-  <img src="https://img.shields.io/badge/Status-Active-success.svg" />
-</p>
+**GirlSafety-SOS** is a real-time emergency response application designed to provide an immediate safety net for women. With a single "SOS" trigger, the app automatically fetches precise GPS coordinates and broadcasts emergency alerts to trusted contacts via SMS.
 
 ---
 
 ## 📌 Problem Statement
-In today's world, personal safety is a paramount concern. Many existing solutions are either too complex to use during an actual emergency or fail to provide precise location data when it's needed most. Often, a victim doesn't have the time to make a call or type a detailed message.
+In critical situations, victims of harassment or danger often face:
+*   **Time Constraints**: No time to dial a number or type a message.
+*   **Panic**: Difficulty in explaining their exact location.
+*   **Connectivity Issues**: Reliance on data for messaging apps (WhatsApp/Telegram) which might be slow.
+*   **Device Loss**: Losing contact lists when moving to a new phone.
 
 ## 💡 The Solution
-**GirlSafety-SOS** simplifies emergency communication into a **one-click action**. 
-- **Instant Alerts**: Sends SMS to multiple contacts simultaneously.
-- **Real-time Tracking**: Includes a direct Google Maps link to the user's current coordinates.
-- **Cloud-Synced Contacts**: Emergency contacts are stored securely in the cloud (Firestore), ensuring they are accessible even if the phone is changed.
+Our app addresses these gaps by providing:
+*   **One-Tap Activation**: A prominent SOS button for instant use.
+*   **Automated Geolocation**: Sends a direct **Google Maps link** of the user's live location.
+*   **SMS-Based Alerting**: Works even without a stable data connection for the recipient.
+*   **Cloud Synchronization**: Securely stores emergency contacts in **Firebase Firestore**, ensuring data persists across devices.
 
 ---
 
 ## 🏗️ Project Architecture
-The project follows a modular Android architecture, ensuring a clean separation of concerns:
+The application follows a **Modular Layered Architecture** to ensure reliability and scalability:
 
-- **UI Layer**: Activities (`MainActivity`, `AddNumbersActivity`, `LoginActivity`, `RegisterActivity`) and XML Layouts using Material Design.
-- **Logic Layer**: Handles runtime permission checks, real-time location fetching, and SMS dispatching.
-- **Data Layer**: 
-    - **Firebase Auth**: Manages user identity and secure session handling.
-    - **Cloud Firestore**: Stores and retrieves emergency contact lists per user.
-    - **Fused Location API**: Provides high-accuracy GPS coordinates.
+1.  **Presentation Layer (UI)**: Built with XML and Material Design. Includes activities for Authentication, Contact Management, and the main SOS dashboard.
+2.  **Service Layer (Logic)**:
+    *   **Location Service**: Uses Google's `FusedLocationProviderClient` for battery-efficient, high-accuracy GPS tracking.
+    *   **SMS Gateway**: Utilizes `SmsManager` to dispatch background messages to multiple recipients.
+3.  **Data Layer (Backend)**: 
+    *   **Firebase Auth**: Secure login/registration.
+    *   **Cloud Firestore**: Real-time NoSQL database to manage user-specific emergency contact lists.
 
 ---
 
 ## 🔄 App Flow
-1.  **Launch**: User is greeted with a sleek Splash Screen.
-2.  **Authentication**: New users register; returning users log in securely via Firebase.
-3.  **Setup**: Users navigate to "Manage Contacts" to add phone numbers of trusted individuals.
-4.  **Emergency**: In danger, the user presses the **SOS Button**.
-5.  **Action**:
-    *   App fetches the **Latitude & Longitude**.
-    *   Generates a **Google Maps link**.
-    *   Retrieves the **Contact List** from Firestore.
-    *   Sends an **Automated SMS** to all contacts.
+The workflow is designed to be frictionless:
+
+1.  **Onboarding**: User creates an account or logs in via Firebase.
+2.  **Configuration**: User adds up to 5 trusted emergency contacts (stored in Firestore).
+3.  **Emergency Trigger**: 
+    *   User presses the **SOS Button** on the `MainActivity`.
+    *   App checks for `SEND_SMS` and `ACCESS_FINE_LOCATION` permissions.
+4.  **Data Processing**: App captures the **Latitude & Longitude** and constructs a Google Maps URL.
+5.  **Alert Dispatch**: The system fetches the contact list from the cloud and sends the SOS SMS to every contact simultaneously.
 
 ---
 
 ## ✨ Key Features
-- 🚨 **One-Tap SOS Alert**: Instant help trigger for high-stress situations.
-- 📍 **Precise Location**: Integration with Google Fused Location Provider for better accuracy.
-- 📲 **Dynamic SMS**: Custom SOS messages with live location links.
-- 📇 **Contact Management**: Add, Edit, and Delete emergency contacts with cloud sync.
-- 🔐 **Secure Auth**: Personalized data protection using Firebase.
-- 🎨 **Intuitive UI**: Clean, Material Design interface for stress-free navigation.
-- 🔔 **Alert Notifications**: Immediate feedback on message delivery status.
+*   🔐 **Secure Cloud Auth**: Personalized accounts so your safety circle is always yours.
+*   📍 **High-Accuracy Tracking**: Real-time GPS integration with Google Play Services.
+*   📇 **Dynamic Contact Manager**: Easily Add, Edit, or Delete contacts with immediate cloud sync.
+*   🚀 **Zero-Delay SOS**: Optimized to send alerts within seconds of the trigger.
+*   🎨 **Material UI**: Modern, clean, and intuitive interface for ease of use under stress.
 
 ---
 
 ## 🛠️ Tech Stack
-| Component | Technology |
+| Category | Technology |
 | :--- | :--- |
-| **Language** | Java |
-| **IDE** | Android Studio |
+| **Language** | Java (JDK 8+) |
+| **Mobile Platform** | Android (Min SDK 26) |
 | **Database** | Firebase Cloud Firestore |
-| **Auth** | Firebase Authentication |
-| **Location** | Google Play Services (Location / Maps API) |
-| **Build Tool** | Gradle |
-| **UI** | Material Design Components |
-
----
-
-## 📂 Project Structure
-```text
-📁 GirlSafety-SOS
- ├── 📁 app
- │    ├── 📁 src/main/java (Java Source Code)
- │    └── 📁 src/main/res (Layouts & Resources)
- ├── 📁 gradle
- ├── 📄 build.gradle
- ├── 📄 settings.gradle
- └── 📄 README.md
-```
+| **Authentication** | Firebase Auth |
+| **Location API** | Google Fused Location Provider |
+| **UI Design** | XML, Material Design Components |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Android Studio Ladybug or later.
-- A Firebase Project (add your `google-services.json` to the `app/` directory).
-- A physical device with a SIM card (for SMS testing).
-
-### Installation
-1.  **Clone the Repo**:
-    ```bash
-    git clone https://github.com/ayush-ranjan9135/GirlSafety-SOS.git
-    ```
-2.  **Open in Android Studio**: Import the project and wait for Gradle sync.
-3.  **Firebase Setup**: 
-    - Enable Email/Password Auth in Firebase Console.
-    - Create a Firestore Database.
-4.  **Run**: Click the "Run" button in Android Studio.
-
----
-
-## 🔐 Permissions Used
-The app requires the following permissions to function effectively:
-- 📩 `SEND_SMS`: To send emergency alerts.
-- 📍 `ACCESS_FINE_LOCATION`: To get accurate GPS data.
-- 📞 `CALL_PHONE`: For quick emergency calling features.
-- 🌐 `INTERNET`: To sync contacts with the cloud.
-
----
-
-## 📌 Future Enhancements
-- [ ] ✔ Voice-Activated SOS (Trigger by keywords)
-- [ ] ✔ Background Tracking Mode
-- [ ] ✔ AI-based Danger Detection (using sensors)
-- [ ] ✔ Nearby Safe Places (Police stations, Hospitals)
-
----
-
-## 👨‍💻 Author
-**Ayush Ranjan**  
-GitHub: [@ayush-ranjan9135](https://github.com/ayush-ranjan9135)
-
----
-
-<p align="center">
-  ⭐ If you find this project useful, please consider giving it a star!
-</p>
+1.  **Clone the Repository**:
+    
