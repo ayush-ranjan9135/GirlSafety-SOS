@@ -1,12 +1,16 @@
 package com.example.girlssafety;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -36,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FusedLocationProviderClient fusedLocationClient;
 
+    // Volume button click variables
+    private int volumeButtonClickCount = 0;
+    private long lastClickTime = 0;
+    private static final long TIME_INTERVAL = 2000; // 2 seconds window to press 4 times
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +71,95 @@ public class MainActivity extends AppCompatActivity {
         btnEditNumbers.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, AddNumbersActivity.class));
         });
+
+        // Check if activity was started by Accessibility Service
+        if (getIntent().getBooleanExtra("TRIGGER_SOS", false)) {
+            checkPermissionsAndProceed();
+        }
+
+        // Show Accessibility Disclosure for Volume Button Trigger
+        showAccessibilityDisclosure();
+    }
+
+    private boolean isAccessibilityServiceEnabled() {
+        int accessibilityEnabled = 0;
+        final String service = getPackageName() + "/" + SafetyAccessibilityService.class.getCanonicalName();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(
+                    getApplicationContext().getContentResolver(),
+                    Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException e) {
+            Log.e(TAG, "Error finding setting accessibility_enabled", e);
+        }
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+
+        if (accessibilityEnabled == 1) {
+            String settingValue = Settings.Secure.getString(
+                    getApplicationContext().getContentResolver(),
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                mStringColonSplitter.setString(settingValue);
+                while (mStringColonSplitter.hasNext()) {
+                    String accessibilityService = mStringColonSplitter.next();
+                    if (accessibilityService.equalsIgnoreCase(service)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void showAccessibilityDisclosure() {
+        if (!isAccessibilityServiceEnabled()) {
+            new AlertDialog.Builder(this)
+                    .setTitle("🛡️ Safety Feature: Volume Button Trigger")
+                    .setMessage("To send an emergency SOS using your Volume Up button (4 quick presses) even when the app is closed, this app requires the 'Accessibility Service' permission.\n\n" +
+                            "How we use this:\n" +
+                            "• We ONLY listen for the Volume Up button presses.\n" +
+                            "• We DO NOT collect or share any other personal data.\n" +
+                            "• This works even when your screen is off.")
+                    .setPositiveButton("Enable in Settings", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Not Now", null)
+                    .setCancelable(false)
+                    .show();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        if (intent.getBooleanExtra("TRIGGER_SOS", false)) {
+            checkPermissionsAndProceed();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            long currentTime = System.currentTimeMillis();
+
+            // If the interval between presses is too long, reset the count
+            if (currentTime - lastClickTime > TIME_INTERVAL) {
+                volumeButtonClickCount = 1;
+            } else {
+                volumeButtonClickCount++;
+            }
+
+            lastClickTime = currentTime;
+
+            if (volumeButtonClickCount == 4) {
+                volumeButtonClickCount = 0; // Reset after trigger
+                Toast.makeText(this, "Panic Mode Activated!", Toast.LENGTH_SHORT).show();
+                checkPermissionsAndProceed(); // Trigger existing SOS logic
+            }
+            return true; // Consume the event
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void checkPermissionsAndProceed() {
@@ -94,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadContactsFromFirestore(String messageToSend) {
+        if (mAuth.getCurrentUser() == null) return;
         String userId = mAuth.getCurrentUser().getUid();
 
         db.collection("emergencyContacts").document(userId).get()

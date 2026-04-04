@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Girls Safety</string>
+    <string name="accessibility_service_description">Used to detect volume button presses for SOS emergency alerts even when the app is closed.</string>
 </resources>
