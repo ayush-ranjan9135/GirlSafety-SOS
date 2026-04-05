@@ -5,29 +5,76 @@ plugins {
 
 android {
     namespace 'com.example.girlssafety'
-    compileSdk 36
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.girlssafety"
         minSdk 26
-        targetSdk 36
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            // Using the standard location for the debug keystore
+            storeFile file(System.getProperty("user.home") + "/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        // Force externalOverride to use debug settings to avoid build errors 
+        // when the IDE injects an invalid signing configuration.
+        externalOverride {
+            storeFile file(System.getProperty("user.home") + "/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+
     buildTypes {
         release {
+            // Use the newly defined externalOverride or debug config
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+// Custom task to move non-resource files from the res directory that cause build failures
+tasks.register("fixMisplacedResources") {
+    doLast {
+        def layoutDir = file("src/main/res/layout")
+        def drawableDir = file("src/main/res/drawable")
+        
+        def newSh = new File(layoutDir, "new.sh")
+        if (newSh.exists()) {
+            println "Moving misplaced file: ${newSh.absolutePath}"
+            newSh.renameTo(new File(project.rootDir, "new.sh.moved"))
+        }
+        
+        def dir1 = new File(drawableDir, "1")
+        if (dir1.exists()) {
+            println "Moving misplaced directory: ${dir1.absolutePath}"
+            dir1.renameTo(new File(project.rootDir, "drawable_1_moved"))
+        }
+    }
+}
+
+preBuild.dependsOn("fixMisplacedResources")
 
 dependencies {
     implementation libs.appcompat

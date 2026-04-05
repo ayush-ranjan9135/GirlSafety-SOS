@@ -6,137 +6,130 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground"
     tools:context=".LoginActivity">
 
-
-    <!-- Progress Bar -->
-
-
-    <!-- Registration Prompt -->
-
-    <!-- Sign Up Button -->
-
-    <!-- Background Image -->
-
     <ImageView
-        android:layout_width="414dp"
-        android:layout_height="235dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-25dp"
-        android:layout_marginEnd="9dp"
+        android:id="@+id/top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/top_background" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="208dp"
-        android:layout_height="95dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="17dp"
-        android:text="Hi,\n Please Login"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="42dp"
-        android:background="@drawable/button_background"
-        android:hint="Email" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/email"
-        android:layout_alignStart="@+id/email"
-        android:layout_alignEnd="@+id/email"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="-5dp"
-        android:background="@drawable/button_background"
-        android:hint="Password" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
-        android:layout_width="333dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_alignEnd="@+id/password"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="-2dp"
-        android:background="@color/green"
-        android:text="Login"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:text="Welcome Back! 👋"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="32sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_login"
-        android:layout_alignStart="@+id/btn_login"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="26dp"
-        android:gravity="center_horizontal"
-        android:text="Don't have an Account?"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:textColor="@color/black"/>
+        android:layout_below="@id/textView2"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Please login to stay safe 🔒"
+        android:textColor="#E0E0E0"
+        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_alignEnd="@+id/btn_login"
-        android:layout_marginStart="-10dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginEnd="34dp"
-        android:layout_toEndOf="@+id/textView3"
-        android:gravity="center_horizontal"
-        android:text="Sign-up"
-        android:textColor="#3F51B5"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/top_bg"
+        android:layout_margin="24dp"
+        android:layout_marginTop="-40dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="?attr/colorSurface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email Address 📧"
+                app:startIconDrawable="@android:drawable/ic_dialog_email"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Password 🔑"
+                app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:text="Login ✨"
+                android:textSize="18sp"
+                app:cornerRadius="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New here? "
+                    android:textColor="?attr/colorOnSurface" />
+
+                <TextView
+                    android:id="@+id/btn_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create Account 📝"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="233dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-128dp"
-        android:layout_marginRight="-128dp"
-        android:layout_marginBottom="-5dp"
-        android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.881"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/wave_women" />
 
-
-    <!-- Add ProgressBar here -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
-
 
 </RelativeLayout>

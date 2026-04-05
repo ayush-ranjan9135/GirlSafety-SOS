@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnSendMessage = findViewById(R.id.btn_send_message);
         Button btnEditNumbers = findViewById(R.id.btn_edit_numbers);
+        Button btnShareApp = findViewById(R.id.btn_share_app);
 
         // Emergency Button Trigger
         btnSendMessage.setOnClickListener(v -> checkPermissionsAndProceed());
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, AddNumbersActivity.class));
         });
 
+        btnShareApp.setOnClickListener(v -> shareApp());
+
         // Check if activity was started by Accessibility Service
         if (getIntent().getBooleanExtra("TRIGGER_SOS", false)) {
             checkPermissionsAndProceed();
@@ -82,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Show Accessibility Disclosure for Volume Button Trigger
         showAccessibilityDisclosure();
+    }
+
+    private void shareApp() {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Girls Safety App");
+            String shareMessage = "\nCheck out this safety app for girls. It helps in emergencies by sending SOS alerts and location to trusted contacts.\n\n";
+            shareMessage = shareMessage + "Download now: https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "Share via"));
+        } catch (Exception e) {
+            Toast.makeText(this, "Error sharing app: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean isAccessibilityServiceEnabled() {
